@@ -31,13 +31,25 @@ app.use(cookieParser());
 
 //--------------------------
 
+var now = Date.now();
+
 var info = [ {
 	name: "Shoes",
-	price: 20 
+	price: 20,
+    duration: 3600000,
 }, {
 	name: "Picture Frame",
-	price: 15
+	price: 15,
+    duration, 4600000,
 } ]
+
+var countDown = setInterval(function () {
+    newInfo = info.map(function (item) {
+        item.timeRemaining = (now + duration) - Date.now() >= 0 ? now + duration - Date.now() : "expired";
+    });
+
+    io.emit("timer", newInfo);
+});
 
 app.get('/', function (req, res) {
     var auctionsTemplate = fs.readFileSync('views/templates/auctions.html.ejs')
@@ -45,9 +57,10 @@ app.get('/', function (req, res) {
 })
 
 app.post('/', function (req, res) {
-		var name = req.body.name
-		var price = parseInt(req.body.price)
-		info.push({name: name, price: price})
+		var name = req.body.name;
+		var price = parseInt(req.body.price);
+        var duration = parseInt(req.body.duration);
+		info.push({name: name, price: price, duration: duration});
 		io.emit('newItem', info)
 })
 
