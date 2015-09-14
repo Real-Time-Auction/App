@@ -10,10 +10,14 @@
 </head>
 <body>
     <div class="container">
-        <div class="header">Navbar to go here</div>
+        <div class="header">
+            <nav class="navbar navbar-fixed">
+                <div class="navbar-inner"><a href="/" class="brand">Auction Madness</a></div>
+            </nav>
+        </div>
         <div class="body">
             <!-- Templates/auctions.html.ejs -->
-            <%= this.partial({url: './Templates/auctions.html.ejs'}) %>
+            <%= auctionsTemplate %>
         </div>
         <div class="footer">Footer to go here</div>
     </div>
