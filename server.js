@@ -32,10 +32,10 @@ app.use(cookieParser());
 //--------------------------
 
 var info = [ {
-	name: "item 1",
+	name: "Shoes",
 	price: 20 
 }, {
-	name: "item 2",
+	name: "Picture Frame",
 	price: 15
 } ]
 
