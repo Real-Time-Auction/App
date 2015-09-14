@@ -27,12 +27,13 @@
 
                 <% }) %>
             </ul>
-        </div>
 
         <h4>Add A New Item Below!</h4>
         <input type = "text" name = "name" placeholder="Name" required>
         <input type = "text" name = "price" placeholder="price" required>
         <button id = "new">Submit</button>
+        </div>
+        <div class="footer"></div>
     </div>
 
 
@@ -80,6 +81,24 @@
         $('[name="name"]').val("");
         price: $('[name="price"]').val("")
     })
+
+    // socket.on("timer", function(info) {
+    //     var data = JSON.parse(info);
+        
+    //     data.forEach(function (item, index) {
+    //         if (data[0].timeRemaining !== "expired") {
+    //             $('h4').text("Time Remaining: " + h + ":" + m + ":" + s);
+    //         } else {
+    //             $('h4').text("expired");
+    //         }
+            
+    //     })
+
+    //     // var ms = parseInt(data[0].timeRemaining);
+    //     // var s = Math.floor(ms / 1000);
+    //     // var m = Math.floor(s / 60);
+    //     // var h = Math.floor(m / 60);
+    // });
 
     $('#new').click(function(){
         var data = {

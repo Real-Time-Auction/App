@@ -36,20 +36,19 @@ var now = Date.now();
 var info = [ {
 	name: "Shoes",
 	price: 20,
-    duration: 3600000,
+    duration: 10000
 }, {
 	name: "Picture Frame",
 	price: 15,
-    duration, 4600000,
+    duration: 13000
 } ]
 
 var countDown = setInterval(function () {
-    newInfo = info.map(function (item) {
-        item.timeRemaining = (now + duration) - Date.now() >= 0 ? now + duration - Date.now() : "expired";
+    var newInfo = info.map(function (item) {
+        item.timeRemaining = (now + item.duration) - Date.now() >= 0 ? now + item.duration - Date.now() : "expired";
     });
-
-    io.emit("timer", newInfo);
-});
+    io.emit("timer", JSON.stringify(info));
+},1000);
 
 app.get('/', function (req, res) {
     var auctionsTemplate = fs.readFileSync('views/templates/auctions.html.ejs')
