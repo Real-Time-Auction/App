@@ -55,7 +55,8 @@
     socket.on('bid', function(info){
         var index = info[info.length - 1];
         var newPrice = info[index].price
-        $('li').eq(index).html(parseInt(newPrice))
+        var name = info[index].name
+        $('li').eq(index).html(parseInt(newPrice)+ " " + name)
     })
 
     socket.on('newItem', function(info) {
@@ -64,6 +65,13 @@
         $li = $('<li>').text(newItem.price+ " " + newItem.name);
         $button = $('<button>').addClass('bid').attr('id', 'bid-' + index).text("Bid");
         $input = $('<input>').attr('id', 'amount-' + index).attr('type', "text").val("5");
+
+        $button.click(function(e){
+            var index = e.currentTarget.id.replace(/[^\d]/g, "")
+            var amount = $("#amount-" + index).val()
+            socket.emit('bid', {"amount": amount, "index": index})
+            return false          
+        });
 
         $('#bid-list').append($li);
         $('#bid-list').append($button);
@@ -85,9 +93,6 @@
             data: data
         })
     })
-
-
-
 
 
     </script>
