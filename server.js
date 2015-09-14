@@ -12,6 +12,8 @@ var methodOverride = require('method-override');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var urlencodedBodyParser = bodyParser.urlencoded({extended: false});
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
 
 //-------------------------- Uses
 
@@ -29,11 +31,37 @@ app.use(cookieParser());
 
 //--------------------------
 
+var info = [ {
+	name: "item 1",
+	price: 20 
+}, {
+	name: "item 2",
+	price: 15
+} ]
+
 app.get('/', function (req, res) {
     var auctionsTemplate = fs.readFileSync('views/templates/auctions.html.ejs')
-    res.render('index.html.ejs', {"auctionsTemplate": auctionsTemplate});
+    res.render('index.html.ejs', {info : info});
 })
 
-app.listen(3000, function () {
+app.post('/', function (req, res) {
+		var name = req.body.name
+		var price = parseInt(req.body.price)
+		info.push({name: name, price: price})
+		io.emit('newItem', info)
+})
+
+
+
+io.on('connection', function(socket){
+  socket.on('bid', function(data){
+  	var index = data.index
+  	info[index].price += parseInt(data.amount)
+
+    io.emit('bid', info.concat([index]));
+  });
+});
+
+http.listen(3000, function () {
     console.log('server ready to rock');
 })

@@ -16,13 +16,84 @@
             </nav>
         </div>
         <div class="body">
-            <!-- Templates/auctions.html.ejs -->
-            <%= auctionsTemplate %>
+            <ul id="bid-list">
+                <% info.forEach(function(item, index){ %>
+
+                <li><%= item.price %> <%= item.name%></li>
+
+
+                <button  class="bid" id = "bid-<%= index %>">Bid</button>
+                <input type = "text" id = "amount-<%= index %>" placeholder = "Bid Amount" value = "5">
+
+                <% }) %>
+            </ul>
         </div>
         <div class="footer">Footer to go here</div>
     </div>
 
+
+        <input type = "text" name = "name" placeholder="Name" required>
+        <input type = "text" name = "price" placeholder="price" required>
+        <button id = "new">Submit</button>
+
+
     <!-- insert the IO cdn script tag here -->
+    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+    <script src="https://cdn.socket.io/socket.io-1.3.5.js"></script>
     <!-- initialize the IO connection here -->
+    <script>
+    var socket = io();
+
+    $('.bid').click(function(e){
+        
+        var index = e.currentTarget.id.replace(/[^\d]/g, "")
+        var amount = $("#amount-" + index).val()
+        socket.emit('bid', {"amount": amount, "index": index})
+        return false
+            
+    });
+
+    socket.on('bid', function(info){
+        var index = info[info.length - 1];
+        var newPrice = info[index].price
+        $('li').eq(index).html(parseInt(newPrice))
+    })
+
+    socket.on('newItem', function(info) {
+        var newItem = info[info.length -1];
+        var index = info.length - 1;
+        $li = $('<li>').text(newItem.price+ " " + newItem.name);
+        $button = $('<button>').addClass('bid').attr('id', 'bid-' + index).text("Bid");
+        $input = $('<input>').attr('id', 'amount-' + index).attr('type', "text").val("5");
+
+        $('#bid-list').append($li);
+        $('#bid-list').append($button);
+        $('#bid-list').append($input);
+
+        $('[name="name"]').val("");
+        price: $('[name="price"]').val("")
+    })
+
+    $('#new').click(function(){
+        var data = {
+            name: $('[name="name"]').val(), 
+            price: $('[name="price"]').val()
+        }
+
+        $.ajax({
+            url: '/',
+            type: "POST",
+            data: data
+        })
+    })
+
+
+
+
+
+    </script>
+
+
+
 </body>
-</html>
+</html> 
