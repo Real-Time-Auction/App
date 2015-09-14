@@ -113,7 +113,10 @@ http.listen(3000, function(){
       <input id="m" autocomplete="off" /><button>Send</button>
     </form>
     <script src="https://cdn.socket.io/socket.io-1.3.5.js"></script>
-<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+	<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+	
+<------ Important Stuff ---->
+
 <script>
   var socket = io();
   $('form').submit(function(){
@@ -126,11 +129,11 @@ http.listen(3000, function(){
   });
 </script>
 
+<-------------------->
+
   </body>
   
 ````
-
-
 
 
 <br>
@@ -141,3 +144,4 @@ http.listen(3000, function(){
 - [Socket.io - NPM](https://www.npmjs.com/package/socket.io)
 - [Treehouse Websocket Intro](http://blog.teamtreehouse.com/an-introduction-to-websockets)
 - [Stack Overflow Websocket Architecture](http://stackoverflow.com/questions/30200225/how-does-websockets-server-architecture-work)
+- [Socket.io Website](http://socket.io/)
