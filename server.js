@@ -43,12 +43,12 @@ var info = [ {
     duration: 13000
 } ]
 
-var countDown = setInterval(function () {
-    var newInfo = info.map(function (item) {
-        item.timeRemaining = (now + item.duration) - Date.now() >= 0 ? now + item.duration - Date.now() : "expired";
-    });
-    io.emit("timer", JSON.stringify(info));
-},1000);
+// var countDown = setInterval(function () {
+//     var newInfo = info.map(function (item) {
+//         item.timeRemaining = (now + item.duration) - Date.now() >= 0 ? now + item.duration - Date.now() : "expired";
+//     });
+//     io.emit("timer", JSON.stringify(info));
+// },1000);
 
 app.get('/', function (req, res) {
     var auctionsTemplate = fs.readFileSync('views/templates/auctions.html.ejs')
